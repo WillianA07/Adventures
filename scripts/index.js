@@ -105,6 +105,67 @@ let activities = [
 window.onload = init();
 
 function init() {
+    document.getElementById("wholeTable").style.display = "none";
+
+    addOptionsToDropDown();
+    document.getElementById("categoryDropDown").onchange = loadDetailsToTableHead;
+}
+
+function addOptionsToDropDown() {
+    let dropDown = document.getElementById("categoryDropDown");
+
+    let defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.text = "Select on adventure";
+    dropDown.appendChild(defaultOption);
+
+    for ( let x of categories) {
+        let options = document.createElement("option");
+        options.value = x;
+        options.text = x;
+        dropDown.appendChild(options);
+    }
+}
+
+function loadDetailsToTableHead() {
+    document.getElementById("wholeTable").style.display = "none";
+    let dropDown = document.getElementById("categoryDropDown");
+    let dropDownValue = dropDown.value;
+
+    const tbBody = document.getElementById("tableBody");
+
+    for ( let detail of activities ) {
+        // let specificCate = activities.filter((f) => {
+
+        // } )
+
+        if ( dropDownValue == detail.category ) {
+            buildTableRowsAndCells(tbBody, detail);
+            // document.getElementById("wholeTable").style.display = "block";
+        }
+        // else {
+        //     document.getElementById("wholeTable").style.display = "none";
+        // }
+    }
+    document.getElementById("wholeTable").style.display = "block";
 
 }
 
+function buildTableRowsAndCells(a, b) {
+    let row = a.insertRow(0);
+
+    let idCell = row.insertCell(0);
+    idCell.innerHTML = b.id;
+
+    let nameCell = row.insertCell(1);
+    nameCell.innerHTML = b.name;
+
+    let descriptionCelll = row.insertCell(2);
+    descriptionCelll.innerHTML = b.description;
+
+    let locationCell = row.insertCell(3);
+    locationCell.innerHTML = b.location;
+
+    let priceCell = row.insertCell(4);
+    priceCell.innerHTML = "$" + b.price;
+}
